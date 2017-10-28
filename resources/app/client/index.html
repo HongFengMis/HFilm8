@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="cn">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>智能体验系统</title>
+
+    <link rel="stylesheet" href="lib/mov/mov.css">
+    <link rel="stylesheet" href="../../assets/css/inc.css">
+
+</head>
+<body ondragstart="return false" onselect="return false" onselectstart="return false" oncontextmenu="return false">
+<div id="CC">
+    <div id="_unable"></div>
+
+    <!--Public-->
+    <section class="cc" id="Loader">
+        <img src="src/img/loader.svg" width="88" alt="">
+        <div class="word"></div>
+    </section>
+
+    <section class="cc" id="Nav">
+        <img width="1920" height="1080"/>
+    </section>
+
+    <section class="cc" id="Video">
+        <video width="1920"></video>
+    </section>
+
+</div>
+</body>
+<!--基础插件-->
+<script>window.$ = window.jQuery = require('jquery');</script>
+<script src="lib/underscore.js"></script>
+<script src="socket.io/socket.io.js"></script>
+<script src="lib/ws.js"></script>
+
+<!--Tool-->
+<script src="lib/mov/mov.js"></script>
+<script src="lib/cc/media.js"></script>
+<script src="lib/cc/lock.js"></script>
+<!--Hammer-->
+
+
+<!--MVC主程序-->
+<script src="../../assets/config.js"></script>
+<script src="lib/cc/mvc.js"></script>
+<script src="src/js/server.js"></script>
+<script src="src/js/view.js"></script>
+<script src="src/js/room.js"></script>
+<script src="src/js/action.js"></script>
+
+<script>
+    window.addEventListener('touchstart', function (event) {
+        if(event.touches.length>1){
+            event.preventDefault();
+        }
+    });
+
+    $(function(){
+
+        //连接服务器，更新操作
+        Url.server = "http://192.168.188.30";
+//        Server.connect(Url.server+"/uploads/film1/base.json", function(){
+            //页面预定义
+            IO.Type = "client";
+            IO.Name = "Film8";
+            IO.Client = "";
+            //IO.connect("http://192.168.188.30:3009/" , function(){
+       		IO.connect(conf.io , function(){
+                //页面预定义
+                View.ini();
+                //Root设置
+                Room.ini();
+
+                //服务与程序启动
+                Action.run("Nav", 2000);
+            });
+//        },1);
+    });
+</script>
+</html>
